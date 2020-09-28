@@ -1,6 +1,7 @@
 package githttp
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -202,6 +203,12 @@ func (g *GitHttp) getTextFile(hr HandlerReq) error {
 func sendFile(content_type string, hr HandlerReq) error {
 	w, r := hr.w, hr.r
 	req_file := path.Join(hr.Dir, hr.File)
+
+	// Modified by Hans Ferchland (BEG/PJ-IOT-C)
+	// Reason: Prevent path traversal
+	if !strings.HasPrefix(req_file, hr.Dir) {
+		return errors.New("Malformed path")
+	}
 
 	f, err := os.Stat(req_file)
 	if err != nil {
