@@ -9,7 +9,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/AaronO/go-git-http"
+	// [28.09.2020] @fentas: changed import path
+	"github.com/calponia/go-git-http"
 )
 
 func TestRpcReader(t *testing.T) {
